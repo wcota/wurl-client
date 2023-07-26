@@ -24,6 +24,7 @@ model Click {
   countryCode   String
   urlId         String?
   originalUrlId String?
+  requestedUrl  String?
   Url           Url?     @relation(fields: [urlId], references: [id])
 }
 ```
@@ -69,3 +70,21 @@ If the URL does not exist (`id` is not found), the following JSON object is retu
 ```
 
 All the errors are saved with `console.error()` for debugging.
+
+## Click data
+
+The user data consists of the following information:
+
+```js
+{
+    referrer, // referrer address
+    userAgent, // user agent
+    clickedBy, // IP of the user
+    countryCode, // 2 letters country code
+    originalUrlId, // the id accessed when clicked
+    urlId, // the id associated to the click, if the ID was found
+    requestedUrl // the requested URL, preserving query strings and so on
+}
+```
+
+Note that `urlId` and `originalUrlId` can be different. The first only exists if the respective ID was found. It may be different if the ID of the associated click has been changed in the `Url` table.
