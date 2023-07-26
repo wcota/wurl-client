@@ -9,7 +9,7 @@ export default {
         prisma = p,
         DEBUG = debug
     },
-    GetLinkById : async (id, req) => {
+    find : async (id, req) => {
 
         var link;
         var errorCode;
