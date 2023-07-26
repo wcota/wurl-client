@@ -1,5 +1,5 @@
 import requestIp from 'request-ip'
-import requestCountry from "@wcota/request-country"
+import geoip from 'geoip-country'
 
 var prisma = null;
 var DEBUG = false;
@@ -33,11 +33,14 @@ export default {
         if (req && !errorCode) {
     
             try {
+                const ipAddress = requestIp.getClientIp(req)
+                const ipCountry = geoip.lookup(ipAddress)
+                
                 const reqOptions = {
                     referrer: req.headers.referer,
                     userAgent: req.headers["user-agent"],
-                    clickedBy:  requestIp.getClientIp(req),
-                    countryCode: requestCountry(req)
+                    clickedBy:  ipAddress,
+                    countryCode: ipCountry ? ipCountry.country : ''
                 }
         
                 if (DEBUG) console.log('reqOptions = ', reqOptions)

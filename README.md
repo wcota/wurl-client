@@ -88,3 +88,45 @@ The user data consists of the following information:
 ```
 
 Note that `urlId` and `originalUrlId` can be different. The first only exists if the respective ID was found. It may be different if the ID of the associated click has been changed in the `Url` table.
+
+## Using it in Next.JS
+
+Create a file at `/lib/wurl.js` with the following content:
+
+```js
+import { prisma } from '@/lib/db'
+import wurl from '@wcota/wurl-client'
+
+wurl.init(prisma, false)
+
+export default wurl
+```
+
+Now, import it where you want to use, such as
+
+```js
+import wurl from '@/lib/wurl'
+
+export const getServerSideProps = async ({req, res, params}) => {
+
+    const result = await wurl.find(params.id, req)
+
+    if (result.status != 'ok') {
+        return {
+            redirect: {
+                destination: process.env.DEFAULT_URL_REDIRECT,
+                statusCode: 302
+            }
+        }
+    }
+
+    return {
+        redirect: {
+            destination: result.data.url,
+            statusCode: 301
+        }
+    }
+    
+    return null
+}
+```
