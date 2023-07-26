@@ -1,4 +1,4 @@
-# w-URL - URL shortner 
+# w-URL - URL shortener 
 
 This is a simple package that provides a function to look for a `id` in a `Url` table and return the redirected URL, and save the click with IP, time, userAgent, referrer, and country code of the user.
 
