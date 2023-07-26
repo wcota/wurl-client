@@ -1,12 +1,13 @@
 import requestIp from 'request-ip'
-import geoip from 'geoip-country'
 
 var prisma = null;
+var geoip = null;
 var DEBUG = false;
 
 export default {
-    init : (p, debug = false) => {
+    init : (p, gip, debug = false) => {
         prisma = p,
+        geoip = gip
         DEBUG = debug
     },
     find : async (id, req) => {
