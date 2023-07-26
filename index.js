@@ -48,8 +48,8 @@ export default {
                     clickedBy:  reqOptions.clickedBy ? reqOptions.clickedBy : '',
                     countryCode: reqOptions.countryCode ? reqOptions.countryCode : '',
                     originalUrlId: id,
-                    urlId: link ? id : null,
-                    requestedUrl : req.originalUrl
+                    urlId: (link ? id : null),
+                    requestedUrl : (req.originalUrl ? req.originalUrl : req.url)
                 }
         
                 if (DEBUG) console.log('data = ', data)
