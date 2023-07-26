@@ -32,7 +32,7 @@ model Click {
 
 ## Initializing
 
-Import the client using `import wurl from '@wcota/wurl-client'`. Now, call `wurl.init(prisma)` with a given Prisma client with access to `Url` and `Click` models.  It will link the w-URL client with Prisma.
+Import the client using `import wurl from '@wcota/wurl-client'`. Now, call `wurl.init(prisma)` with a given Prisma client with access to `Url` and `Click` models.  It will link the w-URL client with Prisma. If debug is necessary (please do not use in production!), pass the flag `debug = true` in `wurl.init()`.
 
 ## Using `find()`
 
@@ -67,3 +67,5 @@ If the URL does not exist (`id` is not found), the following JSON object is retu
   errorMessage: "not found" // or "error while finding link" if there was an error finding the ID
 }
 ```
+
+All the errors are saved with `console.error()` for debugging.
