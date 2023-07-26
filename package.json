@@ -22,8 +22,8 @@
     "node-mocks-http": "^1.12.2"
   },
   "dependencies": {
+    "@wcota/request-country": "^0.1.6",
     "geoip-country": "^4.2.7",
-    "request-country": "^0.1.2",
     "request-ip": "^3.3.0"
   }
 }

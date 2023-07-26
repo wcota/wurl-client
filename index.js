@@ -1,5 +1,5 @@
 import requestIp from 'request-ip'
-import requestCountry from "request-country"
+import requestCountry from "@wcota/request-country"
 
 var prisma = null;
 var DEBUG = false;
