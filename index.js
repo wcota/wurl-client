@@ -30,7 +30,7 @@ export default {
     
         if (DEBUG) console.log('link = ', link)
     
-        if (req) {
+        if (req && !errorCode) {
     
             try {
                 const reqOptions = {
