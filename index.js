@@ -11,39 +11,67 @@ export default {
     },
     GetLinkById : async (id, req) => {
 
-        const link = await prisma.url.findUnique({
-            where : {
-                id: id
-            }
-        })
+        var link;
+        var errorCode;
+        var errorMessage;
+
+        try {
+            link = await prisma.url.findUnique({
+                where : {
+                    id: id
+                }
+            })
+        }
+        catch (e) {
+            errorCode = 500
+            errorMessage = 'error while finding link'
+            console.error(e)
+        }
     
         if (DEBUG) console.log('link = ', link)
     
         if (req) {
     
-            const reqOptions = {
-                referrer: req.headers.referer,
-                userAgent: req.headers["user-agent"],
-                clickedBy:  requestIp.getClientIp(req),
-                countryCode: requestCountry(req)
+            try {
+                const reqOptions = {
+                    referrer: req.headers.referer,
+                    userAgent: req.headers["user-agent"],
+                    clickedBy:  requestIp.getClientIp(req),
+                    countryCode: requestCountry(req)
+                }
+        
+                if (DEBUG) console.log('reqOptions = ', reqOptions)
+        
+                const data = {
+                    referrer: reqOptions.referrer ? reqOptions.referrer : '',
+                    userAgent: reqOptions.userAgent ? reqOptions.userAgent : '',
+                    clickedBy:  reqOptions.clickedBy ? reqOptions.clickedBy : '',
+                    countryCode: reqOptions.countryCode ? reqOptions.countryCode : '',
+                    originalUrlId: id,
+                    urlId: link ? id : null
+                }
+        
+                if (DEBUG) console.log('data = ', data)
+
+                await prisma.click.create({data})
             }
-    
-            if (DEBUG) console.log('reqOptions = ', reqOptions)
-    
-            const data = {
-                referrer: reqOptions.referrer ? reqOptions.referrer : '',
-                userAgent: reqOptions.userAgent ? reqOptions.userAgent : '',
-                clickedBy:  reqOptions.clickedBy ? reqOptions.clickedBy : '',
-                countryCode: reqOptions.countryCode ? reqOptions.countryCode : '',
-                originalUrlId: id,
-                urlId: link ? id : null
+            catch (e) {
+                errorCode = 500
+                errorMessage = 'error while saving click'
+                console.error(e)
             }
-    
-            if (DEBUG) console.log('data = ', data)
-    
-            await prisma.click.create({data})
+            
         }
     
-        return link ? link : null
+        return link ? {
+            status: 'ok',
+            data: link,
+            errorCode,
+            errorMessage
+        } : {
+            status: 'error',
+            errorCode : (errorCode ? errorCode : 404),
+            errorMessage: (errorMessage ? errorMessage : 'not found')
+        }
     }
 }
