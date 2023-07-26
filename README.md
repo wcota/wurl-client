@@ -40,19 +40,19 @@ This function is `async`, requiring the `id` and an optional `req` object with t
 
 In case of success (`id` exists), the following object is returned:
 
-```json
+```js
 {
-  "status": "ok", // "ok" means that the ID was found
-  "data": {
-    "id": "example", // the requested ID
-    "url": "https://example.com", // the redirected URL
-    "title": "Example.com web page!", // title of the page, as it is in the database
-    "createdBy": "127.0.0.1", // IP of who created the ID
-    "createdAt": 2021-03-06T00:43:05.000Z, // timestamp of creation
-    "updatedAt": 2022-08-08T04:22:55.723Z // timestamp of last modified
+  status: "ok", // "ok" means that the ID was found
+  data: {
+    id: "example", // the requested ID
+    url: "https://example.com", // the redirected URL
+    title: "Example.com web page!", // title of the page, as it is in the database
+    createdBy: "127.0.0.1", // IP of who created the ID
+    createdAt: 2021-03-06T00:43:05.000Z, // timestamp of creation
+    updatedAt: 2022-08-08T04:22:55.723Z // timestamp of last modified
   },
-  "errorCode": undefined, // 500 if there was an error adding the click info
-  "errorMessage": undefined // "error while saving click" if there was an error adding the click info
+  errorCode: undefined, // 500 if there was an error adding the click info
+  errorMessage: undefined // "error while saving click" if there was an error adding the click info
 }
 ```
 
@@ -60,10 +60,10 @@ Note the `errorCode` if there is an error saving the user's information.
 
 If the URL does not exist (`id` is not found), the following JSON object is returned, without `data` keyword:
 
-```json
+```js
 {
-  "status": "error", // "error" means that the ID was not found or there was another error
-  "errorCode": 404, // or 500 if there was an error finding the ID
-  "errorMessage": "not found" // or "error while finding link" if there was an error finding the ID
+  status: "error", // "error" means that the ID was not found or there was another error
+  errorCode: 404, // or 500 if there was an error finding the ID
+  errorMessage: "not found" // or "error while finding link" if there was an error finding the ID
 }
 ```
