@@ -2,11 +2,13 @@ import requestIp from 'request-ip'
 import turboGeoip from 'turbo-geoip-country'
 
 var prisma = null
+var ADD_NOT_FOUND = false // add click even if not found
 var DEBUG = false
 
 export default {
-    init : (p, debug = false) => {
-        prisma = p,
+    init : (p, addNotFound = false, debug = false) => {
+        prisma = p
+        ADD_NOT_FOUND = addNotFound
         DEBUG = debug
     },
     find : async (id, req) => {
@@ -21,6 +23,7 @@ export default {
                     id: id
                 }
             })
+            // this will be empty if not found
         }
         catch (e) {
             errorCode = 500
@@ -30,29 +33,31 @@ export default {
     
         if (DEBUG) console.log('link = ', link)
     
-        if (req && !errorCode) {
+        // add to click table
+        if (ADD_NOT_FOUND && req && !errorCode) {
     
             try {
                 const ipAddress = requestIp.getClientIp(req)
                 const ipCountry = turboGeoip.getCountry(ipAddress)
                 
-                const reqOptions = {
+                const reqData = {
                     referer: req.headers.referer,
                     userAgent: req.headers["user-agent"],
                     clickedBy:  ipAddress,
-                    countryCode: ipCountry
+                    countryCode: ipCountry,
+                    requestedUrl: (req.originalUrl ? req.originalUrl : req.url)
                 }
         
-                if (DEBUG) console.log('reqOptions = ', reqOptions)
+                if (DEBUG) console.log('reqData = ', reqData)
         
                 const data = {
-                    referer: reqOptions.referer ? reqOptions.referer : '',
-                    userAgent: reqOptions.userAgent ? reqOptions.userAgent : '',
-                    clickedBy:  reqOptions.clickedBy ? reqOptions.clickedBy : '',
-                    countryCode: reqOptions.countryCode ? reqOptions.countryCode : '',
-                    originalUrlId: id,
-                    urlId: (link ? id : null),
-                    requestedUrl : (req.originalUrl ? req.originalUrl : req.url)
+                    referer: reqData.referer ? reqData.referer : '',
+                    userAgent: reqData.userAgent ? reqData.userAgent : '',
+                    clickedBy:  reqData.clickedBy ? reqData.clickedBy : '',
+                    countryCode: reqData.countryCode ? reqData.countryCode : '',
+                    originalUrlId: id, // always the requested id
+                    urlId: (link ? id : null), // if found, add to the table
+                    requestedUrl : reqData.requestedUrl
                 }
         
                 if (DEBUG) console.log('data = ', data)
