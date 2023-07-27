@@ -1,6 +1,6 @@
 {
   "name": "@wcota/wurl-client",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "NodeJS client of a URL shortener using a database of URLs and Clicks. Provides a function to get the redirected URL and another to save the access.",
   "main": "index.js",
   "type": "module",
@@ -22,7 +22,7 @@
     "node-mocks-http": "^1.12.2"
   },
   "dependencies": {
-    "geoip-country": "^4.2.8",
-    "request-ip": "^3.3.0"
+    "request-ip": "^3.3.0",
+    "turbo-geoip-country": "^23.7.0"
   }
 }

@@ -1,12 +1,8 @@
 import requestIp from 'request-ip'
-import path from 'path'
-import geoip from 'geoip-country'
+import turboGeoip from 'turbo-geoip-country'
 
 var prisma = null
 var DEBUG = false
-
-var FILE_1 = path.resolve(process.cwd(), 'node_modules/geoip-country/data/geoip-country.dat')
-var FILE_2 = path.resolve(process.cwd(), 'node_modules/geoip-country/data/geoip-country6.dat')
 
 export default {
     init : (p, debug = false) => {
@@ -38,7 +34,7 @@ export default {
     
             try {
                 const ipAddress = requestIp.getClientIp(req)
-                const ipCountry = geoip.lookup(ipAddress)
+                const ipCountry = turboGeoip.getCountry(ipAddress)
                 
                 const reqOptions = {
                     referrer: req.headers.referer,
