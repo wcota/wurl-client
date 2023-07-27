@@ -47,8 +47,7 @@ export default {
                     userAgent: req.headers["user-agent"],
                     clickedBy:  ipAddress,
                     countryCode: ipCountry,
-                    requestedUrl: (req.originalUrl ? req.originalUrl : req.url),
-                    origin: (req.headers.origin ? req.headers.origin : '')
+                    requestedUrl: (req.originalUrl ? req.originalUrl : req.url)
                 }
         
                 if (DEBUG) console.log('reqData = ', reqData)
@@ -60,7 +59,7 @@ export default {
                     countryCode: reqData.countryCode ? reqData.countryCode : '',
                     originalUrlId: id, // always the requested id
                     urlId: (link ? id : null), // if found, add to the table
-                    requestedUrl : `${reqData.origin}/${reqData.requestedUrl}`
+                    requestedUrl : reqData.requestedUrl
                 }
         
                 if (DEBUG) console.log('data = ', data)
