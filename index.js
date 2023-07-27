@@ -40,7 +40,7 @@ export default {
                     referrer: req.headers.referer,
                     userAgent: req.headers["user-agent"],
                     clickedBy:  ipAddress,
-                    countryCode: ipCountry ? ipCountry.country : ''
+                    countryCode: ipCountry
                 }
         
                 if (DEBUG) console.log('reqOptions = ', reqOptions)
