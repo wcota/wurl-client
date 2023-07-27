@@ -37,7 +37,7 @@ export default {
                 const ipCountry = turboGeoip.getCountry(ipAddress)
                 
                 const reqOptions = {
-                    referrer: req.headers.referer,
+                    referer: req.headers.referer,
                     userAgent: req.headers["user-agent"],
                     clickedBy:  ipAddress,
                     countryCode: ipCountry
@@ -46,7 +46,7 @@ export default {
                 if (DEBUG) console.log('reqOptions = ', reqOptions)
         
                 const data = {
-                    referrer: reqOptions.referrer ? reqOptions.referrer : '',
+                    referer: reqOptions.referer ? reqOptions.referer : '',
                     userAgent: reqOptions.userAgent ? reqOptions.userAgent : '',
                     clickedBy:  reqOptions.clickedBy ? reqOptions.clickedBy : '',
                     countryCode: reqOptions.countryCode ? reqOptions.countryCode : '',

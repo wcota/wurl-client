@@ -1,6 +1,6 @@
 # w-URL - URL shortener 
 
-This is a simple package that provides a function to look for a `id` in a `Url` table and return the redirected URL, and save the click with IP, time, userAgent, referrer, and country code of the user.
+This is a simple package that provides a function to look for a `id` in a `Url` table and return the redirected URL, and save the click with IP, time, userAgent, referer, and country code of the user.
 
 To install it, you will need to use [Prisma ORM](https://www.prisma.io/) with the following models in the DB schema:
 
@@ -18,7 +18,7 @@ model Url {
 model Click {
   id            Int      @id @default(autoincrement())
   time          DateTime @default(now())
-  referrer      String
+  referer      String
   userAgent     String
   clickedBy     String
   countryCode   String
@@ -37,7 +37,7 @@ Import the client using `import wurl from '@wcota/wurl-client'`. Now, call `wurl
 
 ## Using `find()`
 
-This function is `async`, requiring the `id` and an optional `req` object with the HTTP request object. Prisma will try to find the given URL data from for `id`, and if `req` is provided, will add the access to `id` in the Click table with the timestamp, referrer, user agent, IP, country code, requested ID, original request URL, and URL to where the user was redirected.
+This function is `async`, requiring the `id` and an optional `req` object with the HTTP request object. Prisma will try to find the given URL data from for `id`, and if `req` is provided, will add the access to `id` in the Click table with the timestamp, referer, user agent, IP, country code, requested ID, original request URL, and URL to where the user was redirected.
 
 In case of success (`id` exists), the following object is returned:
 
@@ -77,7 +77,7 @@ The user data consists of the following information:
 
 ```js
 {
-    referrer, // referrer address
+    referer, // referer address
     userAgent, // user agent
     clickedBy, // IP of the user
     countryCode, // 2 letters country code

@@ -1,6 +1,6 @@
 {
   "name": "@wcota/wurl-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "NodeJS client of a URL shortener using a database of URLs and Clicks. Provides a function to get the redirected URL and another to save the access.",
   "main": "index.js",
   "type": "module",
