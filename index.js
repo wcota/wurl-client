@@ -1,8 +1,12 @@
 import requestIp from 'request-ip'
+import path from 'path'
 import geoip from 'geoip-country'
 
-var prisma = null;
-var DEBUG = false;
+var prisma = null
+var DEBUG = false
+
+var FILE_1 = path.resolve(process.cwd(), 'node_modules/geoip-country/data/geoip-country.dat')
+var FILE_2 = path.resolve(process.cwd(), 'node_modules/geoip-country/data/geoip-country6.dat')
 
 export default {
     init : (p, debug = false) => {
