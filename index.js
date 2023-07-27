@@ -13,9 +13,10 @@ export default {
     },
     find : async (id, req) => {
 
-        var link;
-        var errorCode;
-        var errorMessage;
+        var link
+        var errorCode
+        var errorMessage
+        var addClick = false
 
         try {
             link = await prisma.url.findUnique({
@@ -23,6 +24,7 @@ export default {
                     id: id
                 }
             })
+            addClick = (link ? true : ADD_NOT_FOUND)
             // this will be empty if not found
         }
         catch (e) {
@@ -34,9 +36,7 @@ export default {
         if (DEBUG) console.log('link = ', link)
     
         // add to click table
-        if (ADD_NOT_FOUND && req && !errorCode) {
-
-            console.log(req.headers.origin)
+        if (addClick && req) {
     
             try {
                 const ipAddress = requestIp.getClientIp(req)
